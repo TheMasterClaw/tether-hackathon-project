@@ -1,4 +1,4 @@
-# PayStream - USDT Micropayment Streaming
+# TetherStream - USDT Micropayment Streaming
 
 [![Live Demo](https://img.shields.io/badge/Live-Demo-green)](https://paystream-beryl.vercel.app)
 [![Tether](https://img.shields.io/badge/Tether-USDT-26A17B)]()
@@ -10,7 +10,7 @@
 
 ## 💰 What It Does
 
-PayStream enables **real-time USDT micropayments** for AI services.
+TetherStream enables **real-time USDT micropayments** for AI services.
 
 ### The Problem
 - AI API subscriptions are monthly (pay for unused time)
@@ -165,13 +165,13 @@ tether-hackathon-project/
 ```
 Contract Tests: 36/36 PASSING ✅
 
-PayStream.test.js (5 tests)
+TetherStream.test.js (5 tests)
 ├── PaymentStream     - Streaming logic, withdrawals, cancellation
 ├── AgentWallet       - Wallet functionality, auto-streams
 ├── BillingRegistry   - Service registration, ratings
 └── MockUSDT          - Token transfers, approvals
 
-PayStream.extended.test.js (31 tests)
+TetherStream.extended.test.js (31 tests)
 ├── PaymentStream     - Edge cases, fee calculation, limits
 ├── AgentWallet       - Operator permissions, daily limits, batch ops
 └── BillingRegistry   - Marketplace stats, search, cost calculation

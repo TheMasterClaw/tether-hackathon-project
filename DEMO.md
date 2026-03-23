@@ -1,4 +1,4 @@
-# PayStream Hackathon Demo Script
+# TetherStream Hackathon Demo Script
 
 ## Live Demo
 **URL:** https://paystream-beryl.vercel.app
@@ -17,7 +17,7 @@
 - Point out the "Connect Wallet" button
 
 **Talking points:**
-- "PayStream enables real-time USDT streaming for AI agents"
+- "TetherStream enables real-time USDT streaming for AI agents"
 - "Instead of paying upfront, you pay by the second for exactly what you use"
 - "Built on Base Sepolia with real smart contracts"
 
@@ -200,7 +200,7 @@ A: Only 0.25% platform fee - much lower than traditional payment processors.
 
 ## Closing Statement
 
-"PayStream brings real-time payments to AI services. Instead of subscriptions or upfront payments, you pay by the second for exactly what you use. Perfect for AI agents, microservices, and any continuous service."
+"TetherStream brings real-time payments to AI services. Instead of subscriptions or upfront payments, you pay by the second for exactly what you use. Perfect for AI agents, microservices, and any continuous service."
 
 ---
 

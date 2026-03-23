@@ -99,7 +99,7 @@ export function WalletDashboard() {
             <Zap className="w-12 h-12 text-white" />
           </div>
           <h1 className="text-4xl font-bold mb-4 text-white" style={{ fontFamily: 'var(--font-heading)' }}>
-            Welcome to PayStream
+            Welcome to TetherStream
           </h1>
           <p className="text-xl text-gray-400 max-w-md mx-auto">
             Connect your wallet to start streaming USDT payments to AI agents

@@ -1,5 +1,5 @@
 {
-  "name": "paystream",
+  "name": "tetherstream",
   "version": "1.0.0",
   "description": "USDT micropayment streaming for AI agents - built for the Tether Hackathon",
   "main": "index.js",

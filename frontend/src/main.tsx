@@ -11,7 +11,7 @@ import App from './App';
 import { NotificationProvider } from './components/Notifications';
 
 const config = getDefaultConfig({
-  appName: 'PayStream',
+  appName: 'TetherStream',
   projectId: import.meta.env.VITE_WALLETCONNECT_PROJECT_ID || '2',
   chains: [baseSepolia],
   ssr: false,

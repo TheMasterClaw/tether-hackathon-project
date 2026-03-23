@@ -241,7 +241,7 @@ export function StreamTemplates() {
               <tr className="text-left text-sm text-gray-400 border-b border-white/10">
                 <th className="pb-3 font-medium">Service Type</th>
                 <th className="pb-3 font-medium">Traditional</th>
-                <th className="pb-3 font-medium text-[var(--color-cta)]">PayStream</th>
+                <th className="pb-3 font-medium text-[var(--color-cta)]">TetherStream</th>
                 <th className="pb-3 font-medium">Savings</th>
               </tr>
             </thead>

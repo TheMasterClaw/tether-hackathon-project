@@ -19,17 +19,17 @@ import { Link } from 'react-router-dom';
 const SEO = () => {
   useEffect(() => {
     // Update document title and meta tags
-    document.title = 'PayStream - Real-Time USDT Payment Streaming for AI Agents';
+    document.title = 'TetherStream - Real-Time USDT Payment Streaming for AI Agents';
     
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', 'PayStream enables real-time USDT micropayment streaming for AI agents. Automate payments, manage subscriptions, and power pay-per-use AI services on Base.');
+      metaDescription.setAttribute('content', 'TetherStream enables real-time USDT micropayment streaming for AI agents. Automate payments, manage subscriptions, and power pay-per-use AI services on Base.');
     }
     
     // Analytics placeholder
     if (typeof window !== 'undefined' && (window as any).gtag) {
       (window as any).gtag('event', 'page_view', {
-        page_title: 'PayStream Landing',
+        page_title: 'TetherStream Landing',
         page_location: window.location.href,
       });
     }
@@ -49,7 +49,7 @@ const Navigation = () => (
             <Zap className="w-5 h-5 text-white" />
           </div>
           <span className="text-xl font-semibold text-[var(--color-text)]" style={{ fontFamily: 'var(--font-heading)' }}>
-            PayStream
+            TetherStream
           </span>
         </Link>
         
@@ -186,7 +186,7 @@ const Features = () => {
             Everything you need to monetize AI
           </h2>
           <p className="text-lg text-[var(--color-text-muted)]">
-            From micropayments to enterprise billing, PayStream provides the infrastructure 
+            From micropayments to enterprise billing, TetherStream provides the infrastructure 
             for modern AI service monetization.
           </p>
         </div>
@@ -382,7 +382,7 @@ const Footer = () => (
               <Zap className="w-5 h-5 text-white" />
             </div>
             <span className="text-xl font-semibold" style={{ fontFamily: 'var(--font-heading)' }}>
-              PayStream
+              TetherStream
             </span>
           </div>
           <p className="text-gray-400 max-w-sm mb-6">
@@ -426,7 +426,7 @@ const Footer = () => (
       
       <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
         <p className="text-gray-400 text-sm">
-          © 2026 PayStream. Built for the Tether Hackathon.
+          © 2026 TetherStream. Built for the Tether Hackathon.
         </p>
         <div className="flex items-center gap-6 text-sm text-gray-400">
           <a href="#" className="hover:text-white transition-colors">Privacy</a>
