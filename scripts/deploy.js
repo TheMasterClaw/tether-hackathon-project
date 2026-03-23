@@ -30,16 +30,16 @@ async function main() {
   
   await sleep(3000);
 
-  // Deploy PaymentStream
-  console.log('\nDeploying PaymentStream...');
-  const PaymentStream = await ethers.getContractFactory('PaymentStream');
+  // Deploy PaymentStreamV2 (with pause/resume and auto-renewal)
+  console.log('\nDeploying PaymentStreamV2...');
+  const PaymentStream = await ethers.getContractFactory('PaymentStreamV2');
   const paymentStream = await PaymentStream.deploy(
     usdtAddress,
     deployer.address // fee recipient
   );
   await paymentStream.waitForDeployment();
   const paymentStreamAddress = await paymentStream.getAddress();
-  console.log('✓ PaymentStream deployed to:', paymentStreamAddress);
+  console.log('✓ PaymentStreamV2 deployed to:', paymentStreamAddress);
   
   await sleep(3000);
 

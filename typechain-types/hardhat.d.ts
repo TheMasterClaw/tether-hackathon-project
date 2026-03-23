@@ -61,6 +61,10 @@ declare module "hardhat/types/runtime" {
       name: "PaymentStream",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.PaymentStream__factory>;
+    getContractFactory(
+      name: "PaymentStreamV2",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.PaymentStreamV2__factory>;
 
     getContractAt(
       name: "Ownable",
@@ -122,6 +126,11 @@ declare module "hardhat/types/runtime" {
       address: string | ethers.Addressable,
       signer?: ethers.Signer
     ): Promise<Contracts.PaymentStream>;
+    getContractAt(
+      name: "PaymentStreamV2",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.PaymentStreamV2>;
 
     deployContract(
       name: "Ownable",
@@ -171,6 +180,10 @@ declare module "hardhat/types/runtime" {
       name: "PaymentStream",
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.PaymentStream>;
+    deployContract(
+      name: "PaymentStreamV2",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.PaymentStreamV2>;
 
     deployContract(
       name: "Ownable",
@@ -232,6 +245,11 @@ declare module "hardhat/types/runtime" {
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.PaymentStream>;
+    deployContract(
+      name: "PaymentStreamV2",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.PaymentStreamV2>;
 
     // default types
     getContractFactory(

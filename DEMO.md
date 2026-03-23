@@ -104,17 +104,19 @@
 **Show the contracts:**
 ```
 contracts/
-├── PaymentStream.sol    # Core streaming logic
-├── AgentWallet.sol      # Smart wallet for AI agents
+├── PaymentStreamV2.sol # Streaming + pause/resume + auto-renewal
+├── AgentWallet.sol      # WDK-powered smart wallet for AI agents
 ├── BillingRegistry.sol  # Service marketplace
 └── MockUSDT.sol         # Test USDT token
 ```
 
 **Key features to highlight:**
-1. **PaymentStream**
+1. **PaymentStreamV2**
    - Streams are identified by unique bytes32 IDs
    - Rate per second calculated at creation
    - Linear vesting - recipient earns continuously
+   - Pause/resume support for stream management
+   - Auto-renewal option
 
 2. **AgentWallet**
    - Can be controlled by an operator (AI agent)
@@ -133,7 +135,7 @@ npx hardhat test
 ```
 
 **Show results:**
-- 37 tests passing
+- 36 tests passing (5 basic + 31 extended)
 - Edge cases covered
 - Integration tests included
 
@@ -145,7 +147,7 @@ Show verified contracts on Base Sepolia:
 
 | Contract | Explorer Link |
 |----------|---------------|
-| PaymentStream | https://sepolia.basescan.org/address/0xDE900020CEA3F4ca1223a553D66179DF43f14Aa5 |
+| PaymentStreamV2 | https://sepolia.basescan.org/address/0xDE900020CEA3F4ca1223a553D66179DF43f14Aa5 |
 | BillingRegistry | https://sepolia.basescan.org/address/0xb623478107adB1b7153f4df72Fc7FC81A8440107 |
 | AgentWallet | https://sepolia.basescan.org/address/0xBb8960cB40088f6020D2E5e0a880E630FAC5f884 |
 

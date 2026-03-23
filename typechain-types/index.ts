@@ -30,3 +30,5 @@ export type { MockUSDT } from "./contracts/MockUSDT";
 export { MockUSDT__factory } from "./factories/contracts/MockUSDT__factory";
 export type { PaymentStream } from "./contracts/PaymentStream";
 export { PaymentStream__factory } from "./factories/contracts/PaymentStream__factory";
+export type { PaymentStreamV2 } from "./contracts/PaymentStreamV2";
+export { PaymentStreamV2__factory } from "./factories/contracts/PaymentStreamV2__factory";

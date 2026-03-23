@@ -3,9 +3,10 @@
 [![Live Demo](https://img.shields.io/badge/Live-Demo-green)](https://paystream-beryl.vercel.app)
 [![Tether](https://img.shields.io/badge/Tether-USDT-26A17B)]()
 
-## 🎯 Hackathon Submission - Tether Hackathon 2026
+## 🎯 Hackathon Submission - Tether Hackathon Galactica: WDK Edition 1
 
-**Focus**: USDT/Stablecoin Integration
+**Track**: Agent Wallets (WDK / Agents Integration)
+**Focus**: WDK-powered autonomous agent wallets with USDT streaming
 
 ## 💰 What It Does
 
@@ -18,10 +19,11 @@ PayStream enables **real-time USDT micropayments** for AI services.
 - High fees for small payments
 
 ### The Solution
+- **WDK Agent Wallets** - Self-custodial wallets powered by `@tetherto/wdk-core` + `@tetherto/wdk-wallet-evm`
 - **Streaming Payments** - Pay by the second, not by the month
-- **Agent Wallets** - Each AI agent gets its own smart wallet
-- **USDT Integration** - Native stablecoin support
-- **Low Fees** - Optimized for micropayments on Base
+- **On-Chain Policy Control** - Daily limits, approved recipients, max stream amounts
+- **USDT Integration** - Native stablecoin support on Base
+- **Low Fees** - Optimized for micropayments on Base Sepolia
 
 ## 🚀 Live Demo
 
@@ -75,26 +77,27 @@ PayStream enables **real-time USDT micropayments** for AI services.
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│              Frontend (React + TypeScript)          │
+│              Frontend (React + TypeScript)           │
 │  ┌─────────────────────────────────────────────┐    │
 │  │  Dashboard          │  Stream Manager        │    │
 │  │  - Analytics        │  - Create streams      │    │
 │  │  - Visualizations   │  - Templates           │    │
 │  │  - Live flows       │  - Pre-fill params     │    │
 │  ├─────────────────────────────────────────────┤    │
-│  │  Marketplace        │  History               │    │
-│  │  - Service registry │  - Transaction log     │    │
-│  │  - Ratings          │  - CSV export          │    │
-│  │  - Search           │  - Event filtering     │    │
+│  │  Marketplace        │  Agent Wallets (WDK)   │    │
+│  │  - Service registry │  - Seed generation     │    │
+│  │  - Ratings          │  - HD derivation       │    │
+│  │  - Search           │  - Policy config       │    │
 │  └─────────────────────────────────────────────┘    │
-└──────────────────┬──────────────────────────────────┘
-                   │ wagmi + RainbowKit
-                   │
-┌──────────────────▼──────────────────────────────────┐
-│              Smart Contracts (Base Sepolia)         │
-│  PaymentStream.sol    - Core streaming logic        │
-│  AgentWallet.sol      - Smart wallet for agents     │
-│  BillingRegistry.sol  - Service directory           │
+└──────────┬─────────────────────────┬────────────────┘
+           │ wagmi + RainbowKit      │ @tetherto/wdk-core
+           │ (User Wallets)          │ (Agent Wallets)
+           │                         │
+┌──────────▼─────────────────────────▼────────────────┐
+│              Smart Contracts (Base Sepolia)          │
+│  PaymentStreamV2.sol  - Streaming + pause/resume    │
+│  AgentWallet.sol      - Policy-controlled wallets   │
+│  BillingRegistry.sol  - Service marketplace         │
 │  MockUSDT.sol         - USDT for testing            │
 └─────────────────────────────────────────────────────┘
 ```
@@ -103,7 +106,7 @@ PayStream enables **real-time USDT micropayments** for AI services.
 
 | Contract | Address | Purpose |
 |----------|---------|---------|
-| **PaymentStream** | `0xDE900020CEA3F4ca1223a553D66179DF43f14Aa5` | Core streaming |
+| **PaymentStreamV2** | `0xDE900020CEA3F4ca1223a553D66179DF43f14Aa5` | Streaming + pause/resume |
 | **AgentWallet** | `0xBb8960cB40088f6020D2E5e0a880E630FAC5f884` | Agent wallets |
 | **BillingRegistry** | `0xb623478107adB1b7153f4df72Fc7FC81A8440107` | Service registry |
 | **MockUSDT** | `0x068e3C17A5C68906E42E0F28d281D8B8b1E48f8B` | Test USDT |
@@ -118,13 +121,14 @@ PayStream enables **real-time USDT micropayments** for AI services.
 
 ## 🎥 Demo Video
 
-**3-minute walkthrough**: [YouTube Link](https://youtube.com/...)
+See [DEMO.md](./DEMO.md) for the full demo walkthrough with screenshots and step-by-step instructions.
 
 ## 🛠️ Tech Stack
 
+- **Agent Wallets**: Tether WDK (`@tetherto/wdk-core` + `@tetherto/wdk-wallet-evm`)
 - **Frontend**: React 18 + TypeScript + Vite
 - **Styling**: Tailwind CSS
-- **Web3**: wagmi + RainbowKit
+- **Web3**: wagmi + RainbowKit (user wallets)
 - **Contracts**: Solidity ^0.8.20 + Hardhat
 - **Network**: Base Sepolia
 - **Token**: USDT (Mock for testnet)
@@ -134,13 +138,14 @@ PayStream enables **real-time USDT micropayments** for AI services.
 ```
 tether-hackathon-project/
 ├── contracts/           # Solidity smart contracts
-│   ├── PaymentStream.sol
+│   ├── PaymentStreamV2.sol
 │   ├── BillingRegistry.sol
 │   ├── AgentWallet.sol
 │   └── MockUSDT.sol
 ├── frontend/            # React frontend
 │   src/
 │   ├── components/
+│   │   ├── WDKAgentWallets.tsx     # WDK agent wallet manager
 │   │   ├── AnalyticsDashboard.tsx
 │   │   ├── LiveStreamVisualization.tsx
 │   │   ├── StreamTemplates.tsx
@@ -148,20 +153,28 @@ tether-hackathon-project/
 │   │   ├── DemoMode.tsx
 │   │   └── Notifications.tsx
 │   ├── utils/
-│   │   └── contracts.ts
+│   │   ├── contracts.ts            # ABIs + addresses
+│   │   └── wdk.ts                  # WDK integration layer
 │   └── main.tsx
 ├── scripts/             # Deployment scripts
-└── test/                # Contract tests
+└── test/                # Contract tests (36 tests)
 ```
 
 ## 🧪 Test Coverage
 
 ```
-Contract Tests: 4/4 PASSING ✅
+Contract Tests: 36/36 PASSING ✅
+
+PayStream.test.js (5 tests)
 ├── PaymentStream     - Streaming logic, withdrawals, cancellation
 ├── AgentWallet       - Wallet functionality, auto-streams
 ├── BillingRegistry   - Service registration, ratings
 └── MockUSDT          - Token transfers, approvals
+
+PayStream.extended.test.js (31 tests)
+├── PaymentStream     - Edge cases, fee calculation, limits
+├── AgentWallet       - Operator permissions, daily limits, batch ops
+└── BillingRegistry   - Marketplace stats, search, cost calculation
 ```
 
 ## 🚀 Getting Started
@@ -198,11 +211,12 @@ VITE_WALLETCONNECT_PROJECT_ID=your_project_id
 
 ## 🏆 Why We Win
 
-- **Real USDT Integration** - Native stablecoin support on Base
-- **Novel Mechanism** - Pay-per-second is unique in the market
-- **Production Ready** - Working contracts + polished UI
-- **Demo Impressive** - Live visualizations and simulations
-- **Complete Solution** - Templates, analytics, history, notifications
+- **WDK-Native** - Agent wallets built on `@tetherto/wdk-core`, not generic EVM tools
+- **Self-Custodial Agents** - BIP39 seeds, HD derivation, keys never leave agent runtime
+- **Real USDT Streaming** - Pay-per-second micropayments on Base
+- **Policy Control** - On-chain daily limits, approved recipients, max stream amounts
+- **Production Architecture** - 36 passing tests, clean ABIs, working contracts on Base Sepolia
+- **Complete Solution** - Templates, analytics, history, marketplace, and WDK agent management
 
 ## 📄 License
 

@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useAccount, useWriteContract, useReadContract, usePublicClient } from 'wagmi';
 import { formatUnits } from 'viem';
-import { PAYMENT_STREAM_ABI } from '../utils/contracts';
+import { PAYMENT_STREAM_ABI, PAYMENT_STREAM_ADDRESS } from '../utils/contracts';
 import { 
   Zap, 
   ArrowDownRight, 
@@ -14,7 +14,7 @@ import {
   RefreshCw
 } from 'lucide-react';
 
-const PAYMENT_STREAM_ADDRESS = (import.meta.env.VITE_PAYMENT_STREAM_ADDRESS || '0xDE900020CEA3F4ca1223a553D66179DF43f14Aa5') as `0x${string}`;
+// Address imported from ../utils/contracts
 
 interface Stream {
   streamId: string;
@@ -26,7 +26,7 @@ interface Stream {
   endTime: bigint;
   ratePerSecond: bigint;
   isActive: boolean;
-  status?: number; // 0=Active, 1=Paused, 2=Cancelled, 3=Completed
+  status: number; // 0=Active, 1=Paused, 2=Cancelled, 3=Completed
   serviceId: string;
 }
 
@@ -100,21 +100,22 @@ export function ActiveStreams() {
               abi: PAYMENT_STREAM_ABI,
               functionName: 'getStream',
               args: [streamId as `0x${string}`],
-            }) as {
-              sender: string;
-              recipient: string;
-              depositAmount: bigint;
-              withdrawnAmount: bigint;
-              startTime: bigint;
-              endTime: bigint;
-              ratePerSecond: bigint;
-              isActive: boolean;
-              serviceId: string;
-            };
+            }) as readonly [string, string, bigint, bigint, bigint, bigint, bigint, number, string, boolean, bigint, bigint];
 
+            // V2 getStream returns: [sender, recipient, depositAmount, withdrawnAmount, startTime, endTime, ratePerSecond, status, serviceId, autoRenew, remainingTime, availableNow]
+            const status = Number(streamData[7]);
             return {
               streamId,
-              ...streamData,
+              sender: streamData[0],
+              recipient: streamData[1],
+              depositAmount: streamData[2],
+              withdrawnAmount: streamData[3],
+              startTime: streamData[4],
+              endTime: streamData[5],
+              ratePerSecond: streamData[6],
+              status,
+              serviceId: streamData[8],
+              isActive: status === 0 || status === 1, // Active or Paused
             };
           } catch (err) {
             console.error(`Failed to fetch stream ${streamId}:`, err);

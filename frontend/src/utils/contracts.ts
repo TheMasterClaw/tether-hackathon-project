@@ -1,3 +1,4 @@
+// PaymentStreamV2 ABI — matches deployed PaymentStreamV2.sol
 export const PAYMENT_STREAM_ABI = [
   {
     "inputs": [
@@ -12,7 +13,8 @@ export const PAYMENT_STREAM_ABI = [
       { "name": "recipient", "type": "address" },
       { "name": "amount", "type": "uint256" },
       { "name": "duration", "type": "uint256" },
-      { "name": "serviceId", "type": "string" }
+      { "name": "serviceId", "type": "string" },
+      { "name": "_autoRenew", "type": "bool" }
     ],
     "name": "createStream",
     "outputs": [{ "name": "streamId", "type": "bytes32" }],
@@ -57,21 +59,20 @@ export const PAYMENT_STREAM_ABI = [
   {
     "inputs": [{ "name": "streamId", "type": "bytes32" }],
     "name": "getStream",
-    "outputs": [{
-      "components": [
-        { "name": "sender", "type": "address" },
-        { "name": "recipient", "type": "address" },
-        { "name": "depositAmount", "type": "uint256" },
-        { "name": "withdrawnAmount", "type": "uint256" },
-        { "name": "startTime", "type": "uint256" },
-        { "name": "endTime", "type": "uint256" },
-        { "name": "ratePerSecond", "type": "uint256" },
-        { "name": "isActive", "type": "bool" },
-        { "name": "serviceId", "type": "string" }
-      ],
-      "name": "",
-      "type": "tuple"
-    }],
+    "outputs": [
+      { "name": "sender", "type": "address" },
+      { "name": "recipient", "type": "address" },
+      { "name": "depositAmount", "type": "uint256" },
+      { "name": "withdrawnAmount", "type": "uint256" },
+      { "name": "startTime", "type": "uint256" },
+      { "name": "endTime", "type": "uint256" },
+      { "name": "ratePerSecond", "type": "uint256" },
+      { "name": "status", "type": "uint8" },
+      { "name": "serviceId", "type": "string" },
+      { "name": "autoRenew", "type": "bool" },
+      { "name": "remainingTime", "type": "uint256" },
+      { "name": "availableNow", "type": "uint256" }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
@@ -90,6 +91,48 @@ export const PAYMENT_STREAM_ABI = [
     "type": "function"
   },
   {
+    "inputs": [{ "name": "user", "type": "address" }],
+    "name": "getAllStreamsForAddress",
+    "outputs": [{ "name": "", "type": "bytes32[]" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "name": "user", "type": "address" },
+      { "name": "_status", "type": "uint8" }
+    ],
+    "name": "getStreamsByStatus",
+    "outputs": [{ "name": "", "type": "bytes32[]" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "name": "recipient", "type": "address" },
+      { "name": "enabled", "type": "bool" }
+    ],
+    "name": "setAutoRenewal",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "streamCount",
+    "outputs": [{ "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "platformFeeBps",
+    "outputs": [{ "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  // Events
+  {
     "anonymous": false,
     "inputs": [
       { "indexed": true, "name": "streamId", "type": "bytes32" },
@@ -98,7 +141,8 @@ export const PAYMENT_STREAM_ABI = [
       { "name": "amount", "type": "uint256" },
       { "name": "startTime", "type": "uint256" },
       { "name": "endTime", "type": "uint256" },
-      { "name": "serviceId", "type": "string" }
+      { "name": "serviceId", "type": "string" },
+      { "name": "autoRenew", "type": "bool" }
     ],
     "name": "StreamCreated",
     "type": "event"
@@ -127,10 +171,40 @@ export const PAYMENT_STREAM_ABI = [
     "anonymous": false,
     "inputs": [
       { "indexed": true, "name": "streamId", "type": "bytes32" },
-      { "indexed": true, "name": "recipient", "type": "address" },
-      { "name": "finalAmount", "type": "uint256" }
+      { "name": "autoRenewed", "type": "bool" }
     ],
     "name": "StreamCompleted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "name": "streamId", "type": "bytes32" },
+      { "name": "pausedAt", "type": "uint256" },
+      { "name": "remainingTime", "type": "uint256" }
+    ],
+    "name": "StreamPaused",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "name": "streamId", "type": "bytes32" },
+      { "name": "resumedAt", "type": "uint256" },
+      { "name": "newEndTime", "type": "uint256" }
+    ],
+    "name": "StreamResumed",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "name": "streamId", "type": "bytes32" },
+      { "indexed": true, "name": "recipient", "type": "address" },
+      { "name": "notificationType", "type": "string" },
+      { "name": "message", "type": "string" }
+    ],
+    "name": "NotificationSent",
     "type": "event"
   }
 ];
@@ -195,9 +269,59 @@ export const AGENT_WALLET_ABI = [
   },
   {
     "inputs": [],
+    "name": "withdrawAll",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "getBalance",
     "outputs": [{ "name": "", "type": "uint256" }],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getStats",
+    "outputs": [
+      { "name": "balance", "type": "uint256" },
+      { "name": "received", "type": "uint256" },
+      { "name": "sent", "type": "uint256" },
+      { "name": "remainingDaily", "type": "uint256" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getApprovedRecipients",
+    "outputs": [{ "name": "", "type": "address[]" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "name": "newLimit", "type": "uint256" }],
+    "name": "setDailyLimit",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "name": "newOperator", "type": "address" }],
+    "name": "setOperator",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "name": "recipients", "type": "address[]" },
+      { "name": "amounts", "type": "uint256[]" }
+    ],
+    "name": "batchSend",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   }
 ];
@@ -269,6 +393,71 @@ export const BILLING_REGISTRY_ABI = [
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getMarketplaceStats",
+    "outputs": [
+      { "name": "totalServices", "type": "uint256" },
+      { "name": "totalVolume", "type": "uint256" },
+      { "name": "totalProviders", "type": "uint256" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "name": "offset", "type": "uint256" },
+      { "name": "limit", "type": "uint256" }
+    ],
+    "name": "getActiveServices",
+    "outputs": [{ "name": "", "type": "bytes32[]" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "name": "tag", "type": "string" }],
+    "name": "getServicesByTag",
+    "outputs": [{ "name": "", "type": "bytes32[]" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "name": "serviceId", "type": "bytes32" },
+      { "name": "durationOrQuantity", "type": "uint256" }
+    ],
+    "name": "calculateCost",
+    "outputs": [{ "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "name": "serviceId", "type": "bytes32" }],
+    "name": "getAverageRating",
+    "outputs": [{ "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "name": "serviceId", "type": "bytes32" },
+      { "name": "newRate", "type": "uint256" },
+      { "name": "isActive", "type": "bool" },
+      { "name": "newDescription", "type": "string" },
+      { "name": "newEndpoint", "type": "string" }
+    ],
+    "name": "updateService",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalServices",
+    "outputs": [{ "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
   }
 ];
 
@@ -331,3 +520,6 @@ export const USDT_ABI = [
 ];
 
 export const PAYMENT_STREAM_ADDRESS = (import.meta.env.VITE_PAYMENT_STREAM_ADDRESS || '0xDE900020CEA3F4ca1223a553D66179DF43f14Aa5') as `0x${string}`;
+export const BILLING_REGISTRY_ADDRESS = (import.meta.env.VITE_BILLING_REGISTRY_ADDRESS || '0xb623478107adB1b7153f4df72Fc7FC81A8440107') as `0x${string}`;
+export const USDT_ADDRESS = (import.meta.env.VITE_USDT_ADDRESS || '0x068e3C17A5C68906E42E0F28d281D8B8b1E48f8B') as `0x${string}`;
+export const AGENT_WALLET_ADDRESS = (import.meta.env.VITE_AGENT_WALLET_ADDRESS || '0xBb8960cB40088f6020D2E5e0a880E630FAC5f884') as `0x${string}`;

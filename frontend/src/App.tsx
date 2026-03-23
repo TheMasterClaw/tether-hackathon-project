@@ -9,10 +9,11 @@ import { AnalyticsDashboard } from './components/AnalyticsDashboard';
 import { StreamTemplates } from './components/StreamTemplates';
 import { TransactionHistory } from './components/TransactionHistory';
 import { DemoMode } from './components/DemoMode';
+import { WDKAgentWallets } from './components/WDKAgentWallets';
 import { LivePaymentTicker, useRealTimeStreams } from './components/RealTimeStreams';
 import { WebSocketStatus } from './components/WebSocketStatus';
 import LandingPage from './components/LandingPage';
-import { Zap, BarChart3, LayoutTemplate, History, Play } from 'lucide-react';
+import { Zap, BarChart3, LayoutTemplate, History, Play, Shield } from 'lucide-react';
 
 // Dashboard Layout - for authenticated app sections
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
@@ -57,6 +58,10 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
               <Link to="/app/analytics" className="text-gray-300 hover:text-white transition-colors flex items-center gap-1">
                 <BarChart3 className="w-4 h-4" />
                 Analytics
+              </Link>
+              <Link to="/app/agent-wallets" className="text-gray-300 hover:text-white transition-colors flex items-center gap-1">
+                <Shield className="w-4 h-4" />
+                Agent Wallets
               </Link>
               <Link to="/app/templates" className="text-gray-300 hover:text-white transition-colors flex items-center gap-1">
                 <LayoutTemplate className="w-4 h-4" />
@@ -123,6 +128,11 @@ function App() {
       <Route path="/app/templates" element={
         <DashboardLayout>
           <StreamTemplates />
+        </DashboardLayout>
+      } />
+      <Route path="/app/agent-wallets" element={
+        <DashboardLayout>
+          <WDKAgentWallets />
         </DashboardLayout>
       } />
       <Route path="/app/demo" element={

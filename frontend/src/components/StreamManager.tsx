@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useAccount, useBalance, useReadContract, useWriteContract } from 'wagmi';
 import { parseUnits, formatUnits } from 'viem';
 import { useSearchParams, Link } from 'react-router-dom';
-import { USDT_ABI, PAYMENT_STREAM_ABI } from '../utils/contracts';
+import { USDT_ABI, PAYMENT_STREAM_ABI, PAYMENT_STREAM_ADDRESS, USDT_ADDRESS } from '../utils/contracts';
 import { 
   Zap, 
   AlertCircle, 
@@ -15,8 +15,7 @@ import {
   Sparkles
 } from 'lucide-react';
 
-const PAYMENT_STREAM_ADDRESS = (import.meta.env.VITE_PAYMENT_STREAM_ADDRESS || '0xDE900020CEA3F4ca1223a553D66179DF43f14Aa5') as `0x${string}`;
-const USDT_ADDRESS = (import.meta.env.VITE_USDT_ADDRESS || '0x068e3C17A5C68906E42E0F28d281D8B8b1E48f8B') as `0x${string}`;
+// Addresses imported from ../utils/contracts
 
 export function StreamManager() {
   const { address, isConnected } = useAccount();
@@ -110,7 +109,7 @@ export function StreamManager() {
         address: PAYMENT_STREAM_ADDRESS,
         abi: PAYMENT_STREAM_ABI,
         functionName: 'createStream',
-        args: [recipient as `0x${string}`, amountWei, BigInt(duration), serviceId || 'custom-service'],
+        args: [recipient as `0x${string}`, amountWei, BigInt(duration), serviceId || 'custom-service', false],
       });
       setSuccessMessage('Stream created successfully!');
       setRecipient('');

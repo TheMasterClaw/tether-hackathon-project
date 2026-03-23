@@ -5,3 +5,4 @@ export type { AgentWallet } from "./AgentWallet";
 export type { BillingRegistry } from "./BillingRegistry";
 export type { MockUSDT } from "./MockUSDT";
 export type { PaymentStream } from "./PaymentStream";
+export type { PaymentStreamV2 } from "./PaymentStreamV2";

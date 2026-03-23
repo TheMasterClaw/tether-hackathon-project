@@ -5,3 +5,4 @@ export { AgentWallet__factory } from "./AgentWallet__factory";
 export { BillingRegistry__factory } from "./BillingRegistry__factory";
 export { MockUSDT__factory } from "./MockUSDT__factory";
 export { PaymentStream__factory } from "./PaymentStream__factory";
+export { PaymentStreamV2__factory } from "./PaymentStreamV2__factory";
