@@ -106,10 +106,10 @@ TetherStream enables **real-time USDT micropayments** for AI services.
 
 | Contract | Address | Purpose |
 |----------|---------|---------|
-| **PaymentStreamV2** | `0xDE900020CEA3F4ca1223a553D66179DF43f14Aa5` | Streaming + pause/resume |
-| **AgentWallet** | `0xBb8960cB40088f6020D2E5e0a880E630FAC5f884` | Agent wallets |
-| **BillingRegistry** | `0xb623478107adB1b7153f4df72Fc7FC81A8440107` | Service registry |
-| **MockUSDT** | `0x068e3C17A5C68906E42E0F28d281D8B8b1E48f8B` | Test USDT |
+| **PaymentStreamV2** | `0xc3E0869913FCdbeB59934FfC92C74269c428C834` | Streaming + pause/resume |
+| **AgentWallet** | `0x8F44610D43Db6775e351F22F43bDF0ba7F8D0CEa` | Agent wallets |
+| **BillingRegistry** | `0x9C34200882C37344A098E0e8B84a533DFB80e552` | Service registry |
+| **MockUSDT** | `0xEf70C6e8D49DC21b96b02854089B26df9BECE227` | Test USDT |
 
 ## 💸 Use Cases
 

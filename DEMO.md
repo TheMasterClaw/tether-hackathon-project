@@ -147,9 +147,9 @@ Show verified contracts on Base Sepolia:
 
 | Contract | Explorer Link |
 |----------|---------------|
-| PaymentStreamV2 | https://sepolia.basescan.org/address/0xDE900020CEA3F4ca1223a553D66179DF43f14Aa5 |
-| BillingRegistry | https://sepolia.basescan.org/address/0xb623478107adB1b7153f4df72Fc7FC81A8440107 |
-| AgentWallet | https://sepolia.basescan.org/address/0xBb8960cB40088f6020D2E5e0a880E630FAC5f884 |
+| PaymentStreamV2 | https://sepolia.basescan.org/address/0xc3E0869913FCdbeB59934FfC92C74269c428C834 |
+| BillingRegistry | https://sepolia.basescan.org/address/0x9C34200882C37344A098E0e8B84a533DFB80e552 |
+| AgentWallet | https://sepolia.basescan.org/address/0x8F44610D43Db6775e351F22F43bDF0ba7F8D0CEa |
 
 ---
 
